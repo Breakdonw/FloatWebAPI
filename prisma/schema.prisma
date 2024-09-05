@@ -7,7 +7,57 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./dev.db"
 }
 
 
+model Users {
+  id                 BigInt               @id @default(autoincrement())
+  first              String               
+  last               String               
+  email              String             
+  password           String               
+  flags              String?              
+  parentId           Int?
+  createdAt          DateTime             @default(now())
+  lastLogin          DateTime?
+  updatedAt          DateTime             @updatedAt
+  updatedBy          Int?
+  accounts           UserAccount[]
+}
+
+
+
+model UserAccount{
+  id                BigInt @id @default(autoincrement())
+  accountNumber     BigInt 
+  provider          String 
+  nickName          String 
+  balance           BigInt
+  type              Int
+  userid            BigInt
+  user              Users @relation(fields: [userid], references: [id], onDelete: Cascade)
+  transactions      Transactions[]
+}
+
+
+model TransactionsCategory{
+  id               BigInt @id @default(autoincrement())
+  name             String 
+  icon             String 
+  color            String 
+  description      String 
+  transactions     Transactions[]
+}
+
+model Transactions{
+  id               BigInt @id @default(autoincrement())
+  amount           BigInt 
+  accountid        BigInt
+  description      String 
+  categoryid       BigInt
+  date             DateTime
+  dateAdded        DateTime @updatedAt
+  category         TransactionsCategory @relation(fields: [categoryid], references: [id], onDelete: NoAction )
+  account          UserAccount @relation(fields: [accountid], references: [id], onDelete: Cascade )
+}
