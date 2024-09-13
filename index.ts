@@ -1,6 +1,8 @@
 import express, {type Request, type Response } from 'express';
 import  Users  from './src/routes/Users';
-
+BigInt.prototype.toJSON = function() {
+  return this.toString()
+} 
 
 const app = express();
 const port = process.env.PORT || 5174; // 5173 is our UI

@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = "postgresql://Float:Float@localhost:5432/float"
 }
 
 
@@ -17,8 +17,6 @@ model Users {
   last               String               
   email              String             
   password           String               
-  flags              String?              
-  parentId           Int?
   createdAt          DateTime             @default(now())
   lastLogin          DateTime?
   updatedAt          DateTime             @updatedAt
@@ -54,7 +52,7 @@ model Transactions{
   id               BigInt @id @default(autoincrement())
   amount           BigInt 
   accountid        BigInt
-  description      String 
+  company          String 
   categoryid       BigInt
   date             DateTime
   dateAdded        DateTime @updatedAt

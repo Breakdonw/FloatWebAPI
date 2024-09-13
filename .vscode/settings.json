@@ -1,0 +1,16 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "C:\\Users\\Abdoulaye Toure\\Documents\\Code\\Code learning\\WebServer\\prisma\\dev.db",
+            "name": "Blog Db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:FloatWebAPI}/prisma/dev.db",
+            "name": "float"
+        }
+    ]
+}

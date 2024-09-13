@@ -25,7 +25,7 @@ async function securityCheck(accessToken: any, res: Response, level?: number) {
 
 const router = Router();
 
-router.post("/Users/GetUsers", async (req: Request, res: Response) => {
+router.post("/GetUsers", async (req: Request, res: Response) => {
   if ((await securityCheck(req.body.accessToken, res, 3)) === false) {
     return;
   }
@@ -89,14 +89,14 @@ router.post("/Login", async (req: Request, res: Response) => {
 router.post("/Register", async (req: Request, res: Response) => {
   if (
     !req.body.firstName ||
-    !req.body.email ||
     !req.body.lastName ||
-    !req.body.password ||
-    !req.body.hid
+    !req.body.email ||
+    !req.body.password 
   ) {
     res.status(500).send({
       error: "A required Field was missing when the message was sent",
     });
+
     return 0;
   }
 
@@ -108,7 +108,6 @@ router.post("/Register", async (req: Request, res: Response) => {
       req.body.password,
       res
     );
-    console.log(token);
     res
       .status(200)
       .send({ message: "User Created succesfully!", accessToken: token });
@@ -122,7 +121,7 @@ router.post("/Register", async (req: Request, res: Response) => {
 });
 
 router.post("/VerifyToken", async (req: Request, res: Response) => {
-  if (!req.body.requiredRole || !req.body.accessToken) {
+  if (!req.body.accessToken) {
     res.status(500).send({
       error:
         "A Token was not submitted was not submited thus could not be verified",

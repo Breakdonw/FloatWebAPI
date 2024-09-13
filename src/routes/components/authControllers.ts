@@ -1,15 +1,11 @@
-import { PrismaClient, Prisma, Users } from "@prisma/client";
+import { PrismaClient, Prisma, type Users } from "@prisma/client";
 import dotenv from "dotenv";
 
-
 dotenv.config({ path: "../../" });
-const JWTSECRET = process.env.JWT_SECRET;
-var bcrypt = require("bcryptjs");
+const JWTSECRET = process.env.JWTSECRET;
 var jwt = require("jsonwebtoken");
 const prisma = new PrismaClient();
-
-
-
+const bcrypt = require("bcryptjs");
 
 /**
  * The function `changePassword` updates the password of a user identified by their `userid` with the
@@ -91,9 +87,14 @@ export async function verifyToken(token: any, res: any) {
  * Returns:
  *   The encrypted password.
  */
-export function encryptPassword(pwd: string) {
-  return bcrypt.hashSync(pwd, 10);
+export async function encryptPassword(pwd: string) {
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(pwd, salt);
+  return hash;
 }
+
+
+
 
 /**
  * The function `getJWToken` generates a JSON Web Token (JWT) for a given user ID.
@@ -196,7 +197,7 @@ export async function LoginUser(
   try {
     const user = await prisma.users.findFirst({
       where: {
-        OR: [{ email: emailAddress }, { HID: emailAddress }],
+        email: emailAddress
       },
     });
     if (!user || !(await comparePasswords(password, user.password))) {
@@ -220,11 +221,10 @@ export async function LoginUser(
       token: token,
       fName: user.first,
       lName: user.last,
-      role: user.role,
     };
   } catch (error) {
     // Handle any errors that may occur during login
-    console.error("Error during login:", error);
+
     throw error; // You can choose to handle or propagate the error as needed
   } finally {
     await prisma.$disconnect(); // Disconnect from the Prisma client to release resources
@@ -264,26 +264,28 @@ export async function RegisterUser(
 
   if (userExists) {
     // User with the same email already exists, return an error response
-    res
-      .status(500)
-      .send({
-        error:
-          "An account with this email exists please try another email or reset your password to your current account.",
-      });
+    res.status(500).send({
+      error:
+        "An account with this email exists please try another email or reset your password to your current account.",
+    });
     throw new Error("Email is already registered");
   }
 
-  const encryptedPassword = encryptPassword(password);
-  const user = {
-    first: fName,
-    last: lName,
-    email: emailAddress,
-    password: encryptedPassword,
-    lastLogin: new Date(),
-    updatedBy: -1,
-  };
-
-  const createUser = await prisma.users.create({ data: user });
+  const encryptedPassword = await encryptPassword(password);
+  let createUser
+  try {
+   createUser = await prisma.users.create({
+      data: {
+        first: fName,
+        last: lName,
+        email: emailAddress,
+        password: encryptedPassword,
+        lastLogin: new Date(),
+      },
+    });
+  } catch (error) {
+    console.error(error);
+  }
 
   try {
     const token = await getJWToken(createUser);
@@ -299,17 +301,11 @@ export default async function getUsers() {
   try {
     let data = await prisma.users.findMany({
       where: {
-        NOT: {
-          HID: {
-            contains: "S",
-          },
-        },
       },
       select: {
         first: true,
         last: true,
         id: true,
-        flags: true,
         lastLogin: true,
       },
     });
@@ -321,13 +317,10 @@ export default async function getUsers() {
   return false;
 }
 
-
-
 export async function updateUser(
   userId: number,
   first?: string,
-  last?: string,
-
+  last?: string
 ) {
   if (userId === null) {
     console.error("No user Id provided auth updateUser...");
@@ -342,16 +335,12 @@ export async function updateUser(
       data: {
         first: first ? first : undefined,
         last: last ? last : undefined,
-
-      }
+      },
     });
-    console.log(response)
-    return true
+    console.log(response);
+    return true;
   } catch (e) {
-    console.warn(e)
-    return e
+    console.warn(e);
+    return e;
   }
-
-
-
 }
