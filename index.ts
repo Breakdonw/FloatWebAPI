@@ -1,5 +1,8 @@
 import express, {type Request, type Response } from 'express';
 import  Users  from './src/routes/Users';
+import Transactions from './src/routes/Transactions'
+
+
 BigInt.prototype.toJSON = function() {
   return this.toString()
 } 
@@ -18,6 +21,7 @@ app.get('/',(req: Request, res: Response) =>{
 })
 
 app.use('/User', Users)
+app.use('/Transaction', Transactions)
 
 app.listen(port, ()=>{
   console.log(`Server running @ port:${port}`)

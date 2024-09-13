@@ -31,7 +31,9 @@ model UserAccount{
   accountNumber     BigInt 
   provider          String 
   nickName          String 
-  balance           BigInt
+  balance           Float
+  intrest           Float?
+  maxBalance        Float?
   type              Int
   userid            BigInt
   user              Users @relation(fields: [userid], references: [id], onDelete: Cascade)
@@ -48,12 +50,22 @@ model TransactionsCategory{
   transactions     Transactions[]
 }
 
+enum transactionsTypes {
+  purchase
+  creditCardPayment
+  savingsDeposit
+  reoccuring
+  income
+}
+
 model Transactions{
   id               BigInt @id @default(autoincrement())
-  amount           BigInt 
+  amount           Float 
   accountid        BigInt
   company          String 
   categoryid       BigInt
+  type             transactionsTypes @default(purchase)
+  Frequency        Int?
   date             DateTime
   dateAdded        DateTime @updatedAt
   category         TransactionsCategory @relation(fields: [categoryid], references: [id], onDelete: NoAction )

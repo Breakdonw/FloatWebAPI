@@ -44,8 +44,8 @@ export async function decodeToken(token: any) {
     let decodedToken = await jwt.verify(token, JWTSECRET);
     return decodedToken;
   } catch (error) {
-    console.log(error);
-    return false;
+    // console.log(error);
+    return undefined;
   }
 }
 
