@@ -24,6 +24,11 @@ model Users {
   accounts           UserAccount[]
 }
 
+enum accountType {
+  checkings
+  savings
+  credit
+}
 
 
 model UserAccount{
@@ -34,7 +39,7 @@ model UserAccount{
   balance           Float
   intrest           Float?
   maxBalance        Float?
-  type              Int
+  type              accountType
   userid            BigInt
   user              Users @relation(fields: [userid], references: [id], onDelete: Cascade)
   transactions      Transactions[]
