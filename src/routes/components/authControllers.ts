@@ -44,8 +44,8 @@ export async function decodeToken(token: any) {
     let decodedToken = await jwt.verify(token, JWTSECRET);
     return decodedToken;
   } catch (error) {
-    // console.log(error);
-    return undefined;
+    console.log(error);
+    return {error:true ,errormsg:error };
   }
 }
 
@@ -69,8 +69,10 @@ export async function verifyToken(token: any, res: any) {
       message: "No token provided!",
     });
   }
-
-  if (decodeToken(token) !== null) {
+  let decoded = decodeToken(token)
+  if (  decoded.error == true  ) {
+  res.status(500).send({errormsg:decoded.errormsg, error:true})
+} else { 
     return true;
   }
 

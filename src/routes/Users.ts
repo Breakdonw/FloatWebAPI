@@ -75,7 +75,6 @@ router.post("/Login", async (req: Request, res: Response) => {
       accessToken: data?.token,
       firstName: data?.fName,
       lastName: data?.lName,
-      role: data?.role,
     });
   } catch (e) {
     res.status(500).send({
