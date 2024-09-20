@@ -2,6 +2,7 @@ import e, { response, Router, type Request, type Response } from "express";
 import * as Auth from "./components/authControllers";
 import { PrismaClient, transactionsTypes, accountType, type UserAccount, type Transactions } from "@prisma/client";
 import { error } from "console";
+import { endOfMonth, startOfMonth } from "date-fns";
 const router = Router();
 const prisma = new PrismaClient();
 
@@ -98,8 +99,11 @@ router.post("/UserTransaction", async (req: Request, res: Response) => {
   if(token.error == true){
     res.status(500).send({errorMsg:token.error, error:true})
   }
-
+  
   const userid = token.id;
+  const currentDate = new Date();
+  const startOfCurrentMonth = startOfMonth(currentDate);
+  const endOfCurrentMonth = endOfMonth(currentDate);
 
   const data = await prisma.users.findFirst({
     where: {
@@ -113,6 +117,12 @@ router.post("/UserTransaction", async (req: Request, res: Response) => {
           accountNumber:true,
       
           transactions: {
+            where: {
+              date: {
+                gte: startOfCurrentMonth, // Greater than or equal to the start of the current month
+                lte: endOfCurrentMonth,   // Less than or equal to the end of the current month
+              },
+            },
             select: {
               id: true,
               amount: true,
@@ -134,6 +144,7 @@ router.post("/UserTransaction", async (req: Request, res: Response) => {
       },
     },
   });
+
 
   res.status(200).send({ data: data });
   prisma.$disconnect();
@@ -215,7 +226,7 @@ router.post('/removeTransaction', async (req:Request, res:Response)=>{
 });
 
 
-router.get("/UserReoccuring", async (req: Request, res: Response) => {
+router.get("/UserRecurring", async (req: Request, res: Response) => {
   if (!Auth.verifyToken(req.query.accessToken, res) == undefined) {
     res.status(401).send({ error: "Unauthorized." });
     return;
@@ -237,7 +248,7 @@ router.get("/UserReoccuring", async (req: Request, res: Response) => {
           nickName:true,
           transactions: {
             where:{
-                type:transactionsTypes.reoccuring
+                type:transactionsTypes.recurring
             },
             select: {
               id: true,
@@ -257,7 +268,7 @@ router.get("/UserReoccuring", async (req: Request, res: Response) => {
       },
     },
   });
-
+  console.log(data)
   res.status(200).send({ data: data });
   prisma.$disconnect();
   return true;

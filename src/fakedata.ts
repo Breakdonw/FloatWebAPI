@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import {faker}  from "@faker-js/faker"
+import { faker } from '@faker-js/faker';
+import { endOfMonth } from 'date-fns';  // Import date-fns to get the end of the current month
 
 const prisma = new PrismaClient();
 
@@ -9,7 +10,7 @@ async function seed() {
     const existingUsers = await prisma.users.findMany();
     console.log(`Found ${existingUsers.length} existing users.`);
 
-    // Generate fake accounts for existing users
+    // Generate fake accounts and transactions for existing users
     for (const user of existingUsers) {
       await createUserAccountsAndTransactions(user.id);
     }
@@ -38,27 +39,31 @@ async function seed() {
 }
 
 async function createUserAccountsAndTransactions(userId: bigint) {
+  const endOfCurrentMonth = endOfMonth(new Date()); // Get the end of the current month
+
   for (let i = 0; i < 3; i++) {
     const newAccount = await prisma.userAccount.create({
       data: {
         accountNumber: BigInt(faker.finance.accountNumber()),
         provider: faker.company.name(),
         nickName: faker.finance.accountName(),
-        balance: Number(faker.finance.amount({min:1000, max:100000})),
-        type: faker.number.int({ min: 1, max: 3 }), // Assuming types 1-3
+        balance: Number(faker.finance.amount({ min: 1000, max: 100000 })),
+        type: faker.helpers.arrayElement(['checkings', 'savings', 'credit']), // Use the accountType enum
         userid: userId,
       },
     });
 
     // Create transactions for this account
-    for (let j = 0; j < 5; j++) {
+    for (let j = 0; j < 200; j++) {
       await prisma.transactions.create({
         data: {
-          amount: Number(faker.finance.amount({min:100, max:5000})),
+          amount: Number(faker.finance.amount({ min: 100, max: 5000 })),
           accountid: newAccount.id,
           company: faker.company.name(),
-          categoryid: await getRandomCategoryId(),
-          date: faker.date.past(),
+          categoryid: await getRandomCategoryId(), // Get an existing category id
+          type: faker.helpers.arrayElement(['purchase', 'creditCardPayment', 'savingsDeposit', 'recurring', 'income']), // Add type based on your enum
+          Frequency: faker.datatype.boolean() ? faker.number.int({ min: 1, max: 12 }) : null, // Optionally set frequency
+          date: faker.date.between({from:'2024-01-01', to:endOfCurrentMonth}), // Generate dates up to the end of the current month
         },
       });
     }
@@ -66,25 +71,14 @@ async function createUserAccountsAndTransactions(userId: bigint) {
 }
 
 async function getRandomCategoryId(): Promise<bigint> {
+  // Fetch the existing categories in the DB
   let categories = await prisma.transactionsCategory.findMany();
-  if (categories.length == 0){
-    for (let index = 0; index < 10; index++) {
-     let data = prisma.transactionsCategory.create({
-        data:{
-          name:faker.finance.transactionType(),
-          icon:faker.image.avatar(),
-          color:faker.color.rgb(),
-          description:faker.finance.transactionDescription(),
-        }
-      })
-      console.log(await data)
-    }
-    categories = await prisma.transactionsCategory.findMany();
-  }
-  const randomIndex = faker.number.int({min:0, max:categories.length - 1 });
-  console.log(randomIndex)
-  // return categories[randomIndex].id;
-    return categories[randomIndex].id
+  
+
+
+  // Pick a random category
+  const randomIndex = faker.number.int({ min: 0, max: categories.length - 1 });
+  return categories[randomIndex].id;
 }
 
 seed();

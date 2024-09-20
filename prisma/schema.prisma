@@ -59,7 +59,7 @@ model TransactionsCategory{
   purchase
   creditCardPayment
   savingsDeposit
-  reoccuring
+  recurring
   income
 }
 
