@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://Float:Float@localhost:5432/float"
+  url      = env("DATABASE_URL")
 }
 
 
