@@ -13,6 +13,8 @@ RUN bun install
 # Copy the rest of the application source code
 COPY . /app
 
+ENV JWTSECRET="Flaky1-Resize-Overstep"
+ENV DATABASE_URL="postgresql://_fd7d226ba4ba329e:_5f4ecde4e26ec3904ca8935825903b@primary.postgressql--ds6cqb6qnbws.addon.code.run:5432/_7f9e93c113bc?sslmode=require/float"
 
 RUN bunx prisma generate
 RUN bunx prisma migrate deploy 
