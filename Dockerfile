@@ -13,6 +13,8 @@ RUN bun install
 # Copy the rest of the application source code
 COPY . /app
 
+ENV DATABASE_URL=${DATABASE_URL}
+
 
 RUN bunx prisma generate
 RUN bunx prisma migrate deploy 
