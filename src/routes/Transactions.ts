@@ -3,6 +3,7 @@ import * as Auth from "./components/authControllers";
 import { PrismaClient, transactionsTypes, accountType, type UserAccount, type Transactions } from "@prisma/client";
 import { error } from "console";
 import { endOfMonth, startOfMonth } from "date-fns";
+import { CreditCardAccount, SavingsAccount, type AccountInterface } from "./components/accounts";
 const router = Router();
 const prisma = new PrismaClient();
 
@@ -225,6 +226,54 @@ router.post('/removeTransaction', async (req:Request, res:Response)=>{
   return true;
 });
 
+router.post("/calculateBalance", async (req: Request, res: Response) => {
+  const { accountId } = req.body;
+  
+  const accountData = await prisma.userAccount.findUnique({
+    where: { id: accountId },
+    include: { transactions: true },
+  });
+
+  if (!accountData) {
+    return res.status(404).json({ error: "Account not found" });
+  }
+
+  let account: AccountInterface;
+
+  // Dynamically create the correct account type instance based on `type`
+  switch (accountData.type) {
+    case "credit":
+      account = new CreditCardAccount(
+        accountData.id,
+        accountData.accountNumber,
+        accountData.balance,
+        accountData.intrest || 0, 
+        accountData.maxBalance || 0
+      );
+      break;
+
+    case "savings":
+      account = new SavingsAccount(
+        accountData.id,
+        accountData.accountNumber,
+        accountData.balance,
+        accountData.maxBalance || 0
+      );
+      break;
+
+
+      
+    default:
+      return res.status(400).json({ error: "Unknown account type" });
+  }
+
+  // Use polymorphism to calculate the balance
+  const calculatedBalance = account.calculateBalance();
+
+  return res.json({ calculatedBalance });
+});
+
+
 
 router.get("/UserRecurring", async (req: Request, res: Response) => {
   if (!Auth.verifyToken(req.query.accessToken, res) == undefined) {
@@ -268,7 +317,6 @@ router.get("/UserRecurring", async (req: Request, res: Response) => {
       },
     },
   });
-  console.log(data)
   res.status(200).send({ data: data });
   prisma.$disconnect();
   return true;

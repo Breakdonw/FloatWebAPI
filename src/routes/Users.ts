@@ -69,7 +69,6 @@ router.post("/Login", async (req: Request, res: Response) => {
   }
   try {
     const data = await Auth.LoginUser(req.body.email, req.body.password, res);
-    console.log(await data?.token);
     res.status(200).send({
       message: "User logged in successfully",
       accessToken: data?.token,

@@ -171,7 +171,6 @@ export async function getUserInfo(userid: number) {
  */
 export async function comparePasswords(plain: string, dbEncyrpted: string) {
   let truth = await bcrypt.compareSync(plain, dbEncyrpted);
-  console.log(truth);
   return truth;
 }
 
@@ -339,7 +338,6 @@ export async function updateUser(
         last: last ? last : undefined,
       },
     });
-    console.log(response);
     return true;
   } catch (e) {
     console.warn(e);

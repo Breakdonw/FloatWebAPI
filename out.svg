@@ -1,0 +1,128 @@
+<svg version="1.1" baseProfile="full" width="723.5" height="327.0" viewbox="0 0 723.5 327" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
+<desc >#.interface: fill=lightblue
+#.enumeration: fill=lightgreen
+#.type: fill=lightgray
+[Account|+id: bigint;+accountNumber: bigint;+balance: number|+calculateBalance(): number]
+[CreditCardAccount|+interestRate: number;+maxBalance: number|+calculateBalance(): number]
+[SavingsAccount|+goalBalance: number|+calculateBalance(): number]
+[&lt;interface&gt;AccountInterface||+calculateBalance(): number]
+[Account]&lt;:-[CreditCardAccount]
+[Account]&lt;:-[SavingsAccount]</desc>
+<g stroke-width="1.0" text-align="left" font="12pt Helvetica, Arial, sans-serif" font-size="12pt" font-family="Helvetica" font-weight="normal" font-style="normal">
+<g font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" stroke-width="3.0" stroke-linejoin="round" stroke-linecap="round" stroke="#33322E">
+<g stroke="transparent" fill="transparent">
+<rect x="0.0" y="0.0" height="327.0" width="723.5" stroke="none"></rect>
+</g>
+<g transform="translate(8, 8)" fill="#33322E">
+<g transform="translate(20, 20)" fill="#eee8d5" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal">
+<path d="M144.7 129.7 L121.5 143 L121.5 163 L121.5 163.0 " fill="none"></path>
+<path d="M147.3 134.3 L144.7 129.7 L142.0 125.0 L156.2 123.0 Z"></path>
+<path d="M381.3 129.7 L404.5 143 L404.5 170.5 L404.5 170.5 " fill="none"></path>
+<path d="M384.0 125.0 L381.3 129.7 L378.7 134.3 L369.8 123.0 Z"></path>
+<g data-name="Account">
+<g fill="#eee8d5" stroke="#33322E" data-name="Account">
+<rect x="141.5" y="0.0" height="123.0" width="243.0" data-name="Account"></rect>
+<path d="M141.5 31.0 L384.5 31.0" fill="none" data-name="Account"></path>
+<path d="M141.5 92.0 L384.5 92.0" fill="none" data-name="Account"></path>
+</g>
+<g transform="translate(141.5, 0)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Account">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Account">
+<a id="src\routes\components\accounts.ts.Account" xlink:href="src\routes\components\accounts.ts"><text x="113.5" y="13.5" stroke="none" text-anchor="middle" data-name="Account">Account</text></a>
+
+</g>
+</g>
+<g transform="translate(141.5, 31)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Account">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Account">
+<text x="0.0" y="13.5" stroke="none" data-name="Account">+id: bigint</text>
+<text x="0.0" y="28.5" stroke="none" data-name="Account">+accountNumber: bigint</text>
+<text x="0.0" y="43.5" stroke="none" data-name="Account">+balance: number</text>
+
+</g>
+</g>
+<g transform="translate(141.5, 92)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Account">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Account">
+<text x="0.0" y="13.5" stroke="none" data-name="Account">+calculateBalance(): number</text>
+
+</g>
+</g>
+</g>
+<g data-name="CreditCardAccount">
+<g fill="#eee8d5" stroke="#33322E" data-name="CreditCardAccount">
+<rect x="0.0" y="163.0" height="108.0" width="243.0" data-name="CreditCardAccount"></rect>
+<path d="M0.0 194.0 L243.0 194.0" fill="none" data-name="CreditCardAccount"></path>
+<path d="M0.0 240.0 L243.0 240.0" fill="none" data-name="CreditCardAccount"></path>
+</g>
+<g transform="translate(0, 163)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="CreditCardAccount">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="CreditCardAccount">
+<a id="src\routes\components\accounts.ts.CreditCardAccount" xlink:href="src\routes\components\accounts.ts"><text x="113.5" y="13.5" stroke="none" text-anchor="middle" data-name="CreditCardAccount">CreditCardAccount</text></a>
+
+</g>
+</g>
+<g transform="translate(0, 194)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CreditCardAccount">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CreditCardAccount">
+<text x="0.0" y="13.5" stroke="none" data-name="CreditCardAccount">+interestRate: number</text>
+<text x="0.0" y="28.5" stroke="none" data-name="CreditCardAccount">+maxBalance: number</text>
+
+</g>
+</g>
+<g transform="translate(0, 240)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CreditCardAccount">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CreditCardAccount">
+<text x="0.0" y="13.5" stroke="none" data-name="CreditCardAccount">+calculateBalance(): number</text>
+
+</g>
+</g>
+</g>
+<g data-name="SavingsAccount">
+<g fill="#eee8d5" stroke="#33322E" data-name="SavingsAccount">
+<rect x="283.0" y="170.5" height="93.0" width="243.0" data-name="SavingsAccount"></rect>
+<path d="M283.0 201.5 L526.0 201.5" fill="none" data-name="SavingsAccount"></path>
+<path d="M283.0 232.5 L526.0 232.5" fill="none" data-name="SavingsAccount"></path>
+</g>
+<g transform="translate(283, 170.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="SavingsAccount">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SavingsAccount">
+<a id="src\routes\components\accounts.ts.SavingsAccount" xlink:href="src\routes\components\accounts.ts"><text x="113.5" y="13.5" stroke="none" text-anchor="middle" data-name="SavingsAccount">SavingsAccount</text></a>
+
+</g>
+</g>
+<g transform="translate(283, 201.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SavingsAccount">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SavingsAccount">
+<text x="0.0" y="13.5" stroke="none" data-name="SavingsAccount">+goalBalance: number</text>
+
+</g>
+</g>
+<g transform="translate(283, 232.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SavingsAccount">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SavingsAccount">
+<text x="0.0" y="13.5" stroke="none" data-name="SavingsAccount">+calculateBalance(): number</text>
+
+</g>
+</g>
+</g>
+<g data-name="AccountInterface">
+<g fill="lightblue" stroke="#33322E" data-name="AccountInterface">
+<rect x="424.5" y="26.5" height="70.0" width="243.0" data-name="AccountInterface"></rect>
+<path d="M424.5 57.5 L667.5 57.5" fill="none" data-name="AccountInterface"></path>
+<path d="M424.5 65.5 L667.5 65.5" fill="none" data-name="AccountInterface"></path>
+</g>
+<g transform="translate(424.5, 26.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AccountInterface">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AccountInterface">
+<a id="src\routes\components\accounts.ts.AccountInterface" xlink:href="src\routes\components\accounts.ts"><text x="113.5" y="13.5" stroke="none" text-anchor="middle" data-name="AccountInterface">AccountInterface</text></a>
+
+</g>
+</g>
+<g transform="translate(424.5, 57.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AccountInterface">
+<g transform="translate(8, 8)" fill="#33322E" data-name="AccountInterface">
+
+</g>
+</g>
+<g transform="translate(424.5, 65.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AccountInterface">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AccountInterface">
+<text x="0.0" y="13.5" stroke="none" data-name="AccountInterface">+calculateBalance(): number</text>
+
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>
