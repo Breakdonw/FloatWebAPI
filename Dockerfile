@@ -13,5 +13,4 @@ RUN bun install
 # Copy the rest of the application source code
 COPY . /app
 
-RUN bunx prisma generate
-RUN bunx prisma migrate deploy 
+
