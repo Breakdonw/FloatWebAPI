@@ -1,11 +1,11 @@
 import { PrismaClient, Prisma, type Users } from "@prisma/client";
 import dotenv from "dotenv";
+import jwt from 'jsonwebtoken'
+import bcrypt from "bcryptjs"; // Use import instead of require
 
 dotenv.config({ path:"../../../" });
 const JWTSECRET = process.env.JWTSECRET;
-var jwt = require("jsonwebtoken");
 const prisma = new PrismaClient();
-const bcrypt = require("bcryptjs");
 
 /**
  * The function `changePassword` updates the password of a user identified by their `userid` with the
