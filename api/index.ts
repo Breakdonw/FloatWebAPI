@@ -1,6 +1,6 @@
 import express, {type Request, type Response } from 'express';
-import  Users  from '../src/routes/Users.ts';
-import Transactions from '../src/routes/Transactions.ts'
+import  Users  from './src/routes/Users.ts';
+import Transactions from './src/routes/Transactions.ts'
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
