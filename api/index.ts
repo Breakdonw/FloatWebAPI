@@ -40,8 +40,8 @@ initializeDefaultCategories().catch((e) => {
 });
 
 
-const app = express();
-const port = process.env.PORT || 5174; // 5173 is our UI
+export const app = express();
+const port = process.env.PORT || 3000; // 5173 is our UI
 const bodyparser = require('body-parser')
 const cors = require('cors');
 

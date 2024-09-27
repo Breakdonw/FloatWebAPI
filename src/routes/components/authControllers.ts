@@ -42,8 +42,10 @@ export async function changePassword(userid: number, password: string) {
 export async function decodeToken(token: any) {
   try {
     let decodedToken = await jwt.verify(token, JWTSECRET);
+    if(token === null || decodedToken == null){throw new Error("Invalid token")}
     return decodedToken;
   } catch (error) {
+
     console.log(error);
     return {error:true ,errormsg:error };
   }
@@ -69,9 +71,15 @@ export async function verifyToken(token: any, res: any) {
       message: "No token provided!",
     });
   }
-  let decoded = decodeToken(token)
+  let decoded = await decodeToken(token)
+  console.log(decoded)
+
   if (  decoded.error == true  ) {
+    console.log(decoded)
+    console.log(decoded.error)
   res.status(500).send({errormsg:decoded.errormsg, error:true})
+  return false;
+
 } else { 
     return true;
   }
