@@ -59,3 +59,5 @@ app.use('/Transaction', Transactions)
 app.listen(port, ()=>{
   console.log(`Server running @ port:${port}`)
 })
+
+export default app
