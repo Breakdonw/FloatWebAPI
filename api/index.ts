@@ -2,6 +2,8 @@ import express, {type Request, type Response } from 'express';
 import  Users  from './src/routes/Users.js'
 import Transactions from './src/routes/Transactions.js'
 import { PrismaClient } from '@prisma/client';
+import cors from 'cors'
+import bodyparser from 'body-parser'
 
 const prisma = new PrismaClient();
 
@@ -42,8 +44,6 @@ initializeDefaultCategories().catch((e) => {
 
 export const app = express();
 const port = process.env.PORT || 3000; // 5173 is our UI
-const bodyparser = require('body-parser')
-const cors = require('cors');
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
