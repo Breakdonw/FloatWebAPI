@@ -1,9 +1,9 @@
 import e, { response, Router, type Request, type Response } from "express";
-import * as Auth from "./components/authControllers";
+import * as Auth from "./components/authControllers.js";
 import { PrismaClient, transactionsTypes, accountType, type UserAccount, type Transactions } from "@prisma/client";
 import { error } from "console";
 import { endOfMonth, startOfMonth } from "date-fns";
-import { CreditCardAccount, SavingsAccount, type AccountInterface } from "./components/accounts";
+import { CreditCardAccount, SavingsAccount, type AccountInterface } from "./components/accounts.js";
 const router = Router();
 const prisma = new PrismaClient();
 

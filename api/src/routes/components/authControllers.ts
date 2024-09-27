@@ -1,7 +1,7 @@
 import { PrismaClient, Prisma, type Users } from "@prisma/client";
 import dotenv from "dotenv";
 
-dotenv.config({ path: "../../" });
+dotenv.config({ path:"../../../" });
 const JWTSECRET = process.env.JWTSECRET;
 var jwt = require("jsonwebtoken");
 const prisma = new PrismaClient();

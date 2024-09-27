@@ -1,5 +1,5 @@
 import { Router,type Request,type Response } from "express";
-import * as Auth from "./components/authControllers";
+import * as Auth from "./components/authControllers.js";
 
 
 async function securityCheck(accessToken: any, res: Response, level?: number) {
